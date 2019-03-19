@@ -31,7 +31,7 @@ class HomeController extends Controller
         $socketId = $request->socket_id;
         $channelName = $request->channel_name;
         $pusher = new Pusher('dfeefdd494c7ac38b7db', '91602ea8785ce93ac20e', '738915', [
-            'cluster' => 'ap2',
+            'cluster' => 'eu',
             'encrypted' => true
         ]);
         $presence_data = ['name' => auth()->user()->name];
