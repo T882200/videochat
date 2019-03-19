@@ -77964,9 +77964,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -77994,11 +77994,15 @@ function (_Component) {
       otherUserId: null
     };
     _this.user = window.user;
+    _this.user.stream = null;
     _this.peers = {};
     _this.mediaHandler = new _MediaHandler__WEBPACK_IMPORTED_MODULE_2__["default"]();
 
     _this.setupPusher();
 
+    _this.callTo = _this.callTo.bind(_assertThisInitialized(_this));
+    _this.setupPusher = _this.setupPusher.bind(_assertThisInitialized(_this));
+    _this.startPeer = _this.startPeer.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -78011,6 +78015,8 @@ function (_Component) {
         _this2.setState({
           hasMedia: true
         });
+
+        _this2.user.stream = stream;
 
         try {
           _this2.myVideo.srcObject = stream;
@@ -78101,17 +78107,24 @@ function (_Component) {
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "App"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, [1, 2, 3, 4].map(function (userId) {
+        return _this5.user.id !== userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          key: userId,
+          onClick: function onClick() {
+            return _this5.callTo(userId);
+          }
+        }, "Call ", userId) : null;
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "video-container"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         className: "my-video",
         ref: function ref(_ref) {
-          return _this5.myVideo = _ref;
+          _this5.myVideo = _ref;
         }
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("video", {
         className: "user-video",
         ref: function ref(_ref2) {
-          return _this5.userVideo = _ref2;
+          _this5.userVideo = _ref2;
         }
       })));
     }

@@ -13,18 +13,22 @@ export default class App extends Component {
             otherUserId: null
         };
         this.user = window.user;
+        this.user.stream = null;
         this.peers = {};
         
         this.mediaHandler = new MediaHandler();
     
         this.setupPusher();
+        this.callTo = this.callTo.bind(this);
+        this.setupPusher = this.setupPusher.bind(this);
+        this.startPeer = this.startPeer.bind(this);
     }
     
     componentWillMount(){
         this.mediaHandler.getPermissions()
         .then((stream) => {
             this.setState({hasMedia: true});
-            
+            this.user.stream = stream;
             try{
                 this.myVideo.srcObject = stream;
             } catch(e){
@@ -114,9 +118,13 @@ export default class App extends Component {
     render() {
         return (
             <div className="App">
+                {[1,2,3,4].map((userId) => {
+                    return this.user.id !== userId ? <button key={userId} onClick={() => this.callTo(userId)}>Call {userId}</button> : null;
+                })}
+
                 <div className="video-container">
-                    <div className="my-video" ref={(ref) => this.myVideo = ref}></div>
-                    <div className="user-video" ref={(ref) => this.userVideo = ref}></div>
+                    <video className="my-video" ref={(ref) => {this.myVideo = ref;}}></video>
+                    <video className="user-video" ref={(ref) => {this.userVideo = ref;}}></video>
                 </div>
             </div>
         );
